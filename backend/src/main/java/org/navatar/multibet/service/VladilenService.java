@@ -16,7 +16,7 @@ public class VladilenService {
 
     public Vladilen patchupdate(Vladilen vladilenFromDb, Vladilen vladilen) {
 
-        vladilenFromDb.setLastname4(vladilen.getLastname4());
+        vladilenFromDb.setLastname(vladilen.getLastname());
 
         return vladilenRepo.save(vladilenFromDb);
     }
