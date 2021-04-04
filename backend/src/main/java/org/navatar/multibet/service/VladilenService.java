@@ -13,13 +13,9 @@ public class VladilenService {
         this.vladilenRepo = vladilenRepo;
     }
 
-
     public Vladilen patchupdate(Vladilen vladilenFromDb, Vladilen vladilen) {
-
         vladilenFromDb.setLastname(vladilen.getLastname());
-
         return vladilenRepo.save(vladilenFromDb);
     }
-
 
 }
