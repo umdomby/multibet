@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.navatar.multibet.domain.Views;
 import org.navatar.multibet.domain.Vladilen;
 import org.navatar.multibet.repository.VladilenRepo;
+import org.navatar.multibet.service.VladilenService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vladilen")
 public class VladilenController {
+
     private final VladilenRepo vladilenRepo;
+    private final VladilenService vladilenService;
 
     @Autowired
-    public VladilenController(VladilenRepo vladilenRepo) {
+    public VladilenController(VladilenRepo vladilenRepo, VladilenService vladilenService) {
         this.vladilenRepo = vladilenRepo;
+        this.vladilenService = vladilenService;
     }
 
     @GetMapping
@@ -34,7 +38,6 @@ public class VladilenController {
 
     @PostMapping
     public Vladilen create(@RequestBody Vladilen vladilen) {
-//        vladilen.setCreationDate(LocalDateTime.now());
         return vladilenRepo.save(vladilen);
     }
 
@@ -46,6 +49,17 @@ public class VladilenController {
         BeanUtils.copyProperties(vladilen, vladilenFromDb, "id");
 
         return vladilenRepo.save(vladilenFromDb);
+    }
+
+    @PatchMapping("{id}")
+    public Vladilen patchupdate(
+            @PathVariable("id") Vladilen vladilenFromDb,
+            @RequestBody Vladilen vladilen
+    ) {
+//        vladilenFromDb.setLastname4(vladilen.getLastname4());
+//        return vladilenRepo.save(vladilenFromDb);
+
+        return vladilenService.patchupdate(vladilenFromDb,vladilen);
     }
 
     @DeleteMapping("{id}")

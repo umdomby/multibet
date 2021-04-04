@@ -12,37 +12,17 @@
           <input type="text" v-model="person.lastname4">
         </h3>
         <button class="btn danger" @click="$emit('remove', person.id)">Удалить</button>
-        <button class="btn danger" @click="$emit('update', person.id, person.name, person.lastname, person.lastname1, person.lastname2, person.lastname3, person.lastname4)">Сохранить</button>
-<!--        <button class="btn" @click="$emit('update', person.id)">Редактировать</button>-->
-<!--        <button class="btn" @click="$emit('save', person.id)">Сохранить</button>-->
+        <button class="btn danger" @click="$emit('update', person.id, person.name, person.lastname, person.lastname1, person.lastname2, person.lastname3, person.lastname4)">Сохранить всё</button>
+        <button class="btn danger" @click="$emit('patchupdate', person.id, person.lastname4)">Сохранить lastname4</button>
       </div>
   </div>
-<!--    <div class="card center" v-else>-->
-<!--      <h4>Людей пока нет.</h4>-->
-<!--      <button class="btn" @click="$emit('load')">Загрузить список</button>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script>
 export default {
   name: "VladilenList",
-  // data() {
-  //   return {
-  //     id: '',
-  //     name: '',
-  //     lastname: '',
-  //   }
-  // },
-  emits: ['load', 'remove', 'update', 'save'],
+  emits: ['remove', 'update', 'patchupdate'],
   props: ['people'],
-  // watch: {
-  //   people(newVal, oldVal) {
-  //     this.id = newVal.id
-  //     this.neme = newVal.name
-  //     this.lastname = newVal.lastname
-  //   }
-  // },
 }
 </script>
 

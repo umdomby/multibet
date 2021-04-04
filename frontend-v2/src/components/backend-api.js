@@ -5,23 +5,10 @@ const AXIOS = axios.create({
   timeout: 1000
 });
 
-
 export default {
-    // message() {return AXIOS.get(`/message`);},
-    // update(messageId) {return AXIOS.post(`/message` + messageId);},
-    // save() {return AXIOS.post(`/message`);},
-
-
-    hello() {return AXIOS.get(`/hello`);},
-    getUser(userId) {return AXIOS.get(`/user/` + userId);},
-    createUser(firstName, lastName) {return AXIOS.post(`/user/` + firstName + '/' + lastName);},
-    getSecured(user, password) {
-        return AXIOS.get(`/secured/`,{
-            auth: {
-                username: user,
-                password: password
-            }});
-    }
+    // vladelen() {return AXIOS.get(`/api/vladelen`);},
+    // update(vladelenId) {return AXIOS.post(`/api/vladelen` + vladelenId);},
+    // save() {return AXIOS.post(`/api/vladelen`);},
 }
 
 

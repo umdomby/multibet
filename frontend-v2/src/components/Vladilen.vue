@@ -3,9 +3,6 @@
   <div>
 
     <div class="container">
-<!--      <app-alert :alert="alert" @close="alert = null"></app-alert>-->
-
-<!--      <form @submit.prevent="createPerson">-->
         <h2>Работа с базой данных</h2>
         <div class="form-control">
           <label for="name">name</label>
@@ -20,27 +17,23 @@
           <input type="text" id="lastname3" v-model.trim="lastname3">
           <label for="lastname4">l4</label>
           <input type="text" id="lastname4" v-model.trim="lastname4">
-
         </div>
         <br>
         <br>
-<!--        <button class="btn primary" :disabled="name.length === 0" >Создать человека</button>-->
-<!--      </form>-->
-      <button class="btn primary" :disabled="name.length === 0" @click="createPerson">Создать человека 2</button>
+        <br>
+
+      <button class="btn primary" :disabled="name.length === 0" @click="createPerson">Создать человека</button>
     </div>
 
     <div>
       <button class=”Search__button” @click="loadPeople()">CALL Spring Boot REST backend service</button>
       <button @click="clear"> Clear </button>
-
       <vladilen-list
           :people="people"
-          @load="loadPeople"
           @remove="removePerson"
           @update="updatePerson"
-          @save="savePerson"
+          @patchupdate="patchUpdatePerson"
       > </vladilen-list>
-
     </div>
 
   </div>
@@ -82,7 +75,6 @@
         async loadPeople() {
           try {
             const {data} = await axios.get('/api/vladilen')
-
             this.people = Object.keys(data).map(key => {
               return {
                 id: key,
@@ -110,18 +102,12 @@
             lastname4: this.lastname4,
           })
           console.log(response)
-          // this.people.push({
-          //   name: this.name,
-          //   lastname: this.lastname,
-          //
-          // })
           this.name = ''
           this.lastname = ''
           this.lastname1 = ''
           this.lastname2 = ''
           this.lastname3 = ''
           this.lastname4 = ''
-
           await this.loadPeople()
         },
         async removePerson(id) {
@@ -130,18 +116,12 @@
             await axios.delete(`/api/vladilen/${id}`)
             this.people = this.people.filter(person => person.id !== id)
 
-            this.alert = {
-              type: 'primary',
-              title: 'Успешно!',
-              text: `Пользователь с именем "${name}" был удален`
-            }
           } catch (e) {
             console.log(e.message)
           }
         },
         async updatePerson(id, name, lastname, lastname1, lastname2, lastname3, lastname4) {
           try {
-
             const response = await axios.put(`/api/vladilen/${id}`, {
               name: name,
               lastname: lastname,
@@ -150,32 +130,24 @@
               lastname3: lastname3,
               lastname4: lastname4
             })
-
-            // this.name = ''
-            // this.lastname = ''
-
             await this.loadPeople()
-
-            // this.name = name
-            // this.lastname = lastname
-            // this.name = this.people.find(person => person.id === id).name
-            // this.lastname = this.people.find(person => person.id === id).lastname
-
           } catch (e) {
             console.log(e.message)
           }
         },
 
+        async patchUpdatePerson(id, lastname4) {
+          try {
 
+            const response = await axios.patch(`/api/vladilen/${id}`, {
+              lastname4: lastname4
+            })
 
-        async savePerson(id) {
-          const response = await axios.put(`/api/vladilen/${id}`, {
-            name: this.name,
-            lastname: this.lastname
-          })
-          this.name = ''
-          this.lastname = ''
-          await this.loadPeople()
+            await this.loadPeople()
+
+          } catch (e) {
+            console.log(e.message)
+          }
         },
       },
     }
