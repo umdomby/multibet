@@ -44,14 +44,23 @@ export default {
   methods: {
 
     async createPerson() {
+      try {
         const response = await axios.post('/api/vladilen', {
           name: this.name,
           lastname: this.lastname
         })
         console.log(response)
+        this.alert = {
+          type: 'primary',
+          title: 'Успешно!',
+          text: `Пользователь с именем "${this.name}" был создан`
+        }
         this.name = ''
         this.lastname = ''
         await this.loadPeople()
+      }catch (e) {
+        console.log(e.message)
+      }
     },
 
     async loadPeople() {
@@ -97,6 +106,11 @@ export default {
           name: name,
           lastname: lastname
         })
+        this.alert = {
+          type: 'primary',
+          title: 'Успешно!',
+          text: `Пользователь "${id}" с именем "${name}" был изменен`
+        }
         await this.loadPeople()
       } catch (e) {
         console.log(e.message)
@@ -107,6 +121,11 @@ export default {
         await axios.patch(`/api/vladilen/${id}`, {
           lastname: lastname
         })
+        this.alert = {
+          type: 'primary',
+          title: 'Успешно!',
+          text: `Пользователь "${id}" с фамилией "${lastname}" был изменен`
+        }
         await this.loadPeople()
       } catch (e) {
         console.log(e.message)
