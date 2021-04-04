@@ -16,10 +16,9 @@
 
   <vladilen-list
        :people="people"
-       @load="loadPeople"
        @remove="removePerson"
        @update="updatePerson"
-       @save="savePerson"
+       @patchupdate="patchUpdatePerson"
   ></vladilen-list>
 </template>
 
@@ -44,33 +43,14 @@ export default {
   },
   methods: {
 
-    async savePerson(id) {
-      const response = await axios.put(`/api/vladilen/${id}`, {
-        name: this.name,
-        lastname: this.lastname
-      })
-
-      this.name = ''
-      this.lastname = ''
-
-      await this.loadPeople()
-
-    },
-
     async createPerson() {
         const response = await axios.post('/api/vladilen', {
           name: this.name,
           lastname: this.lastname
         })
         console.log(response)
-        // this.people.push({
-        //   name: this.name,
-        //   lastname: this.lastname,
-        //
-        // })
         this.name = ''
         this.lastname = ''
-
         await this.loadPeople()
     },
 
@@ -102,7 +82,6 @@ export default {
         const name = this.people.find(person => person.id === id).name
         await axios.delete(`/api/vladilen/${id}`)
         this.people = this.people.filter(person => person.id !== id)
-
         this.alert = {
           type: 'primary',
           title: 'Успешно!',
@@ -114,30 +93,27 @@ export default {
     },
     async updatePerson(id, name, lastname) {
       try {
-
-        const response = await axios.put(`/api/vladilen/${id}`, {
+        await axios.put(`/api/vladilen/${id}`, {
           name: name,
           lastname: lastname
         })
-
-        // this.name = ''
-        // this.lastname = ''
-
         await this.loadPeople()
-
-        // this.name = name
-        // this.lastname = lastname
-        // this.name = this.people.find(person => person.id === id).name
-        // this.lastname = this.people.find(person => person.id === id).lastname
-
+      } catch (e) {
+        console.log(e.message)
+      }
+    },
+    async patchUpdatePerson(id, lastname) {
+      try {
+        await axios.patch(`/api/vladilen/${id}`, {
+          lastname: lastname
+        })
+        await this.loadPeople()
       } catch (e) {
         console.log(e.message)
       }
     },
 
-
     // async createPerson() {
-    //
     //   const response = await fetch('/api/vladilen', {
     //     method: 'POST',
     //     headers: {
