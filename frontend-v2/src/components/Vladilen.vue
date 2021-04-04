@@ -84,11 +84,7 @@
               }
             })
           }catch(e){
-            this.alert = {
-              type: 'danger',
-              title: 'Ошибка!',
-              text: 'e'
-            }
+            console.log(e.message)
           }
           console.log(this.people)
         },
@@ -112,17 +108,15 @@
         },
         async removePerson(id) {
           try {
-            const name = this.people.find(person => person.id === id).name
             await axios.delete(`/api/vladilen/${id}`)
             this.people = this.people.filter(person => person.id !== id)
-
           } catch (e) {
             console.log(e.message)
           }
         },
         async updatePerson(id, name, lastname, lastname1, lastname2, lastname3, lastname4) {
           try {
-            const response = await axios.put(`/api/vladilen/${id}`, {
+            await axios.put(`/api/vladilen/${id}`, {
               name: name,
               lastname: lastname,
               lastname1: lastname1,
@@ -138,13 +132,10 @@
 
         async patchUpdatePerson(id, lastname4) {
           try {
-
-            const response = await axios.patch(`/api/vladilen/${id}`, {
+            await axios.patch(`/api/vladilen/${id}`, {
               lastname4: lastname4
             })
-
             await this.loadPeople()
-
           } catch (e) {
             console.log(e.message)
           }
