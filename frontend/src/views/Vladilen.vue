@@ -96,6 +96,7 @@ export default {
           title: 'Успешно!',
           text: `Пользователь с именем "${name}" был удален`
         }
+        await this.loadPeople()
       } catch (e) {
         console.log(e.message)
       }
