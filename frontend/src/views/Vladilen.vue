@@ -94,7 +94,7 @@ export default {
         this.alert = {
           type: 'primary',
           title: 'Успешно!',
-          text: `Пользователь с именем "${name}" был удален`
+          text: `Пользователь с ID: "${id}" был удален`
         }
         await this.loadPeople()
       } catch (e) {
@@ -110,7 +110,7 @@ export default {
         this.alert = {
           type: 'primary',
           title: 'Успешно!',
-          text: `Пользователь "${id}" с именем "${name}" был изменен`
+          text: `Пользователь "${id}" был изменен на имя:"${name}" и фамилию:"${lastname}"`
         }
         await this.loadPeople()
       } catch (e) {
@@ -125,7 +125,7 @@ export default {
         this.alert = {
           type: 'primary',
           title: 'Успешно!',
-          text: `Пользователь "${id}" с фамилией "${lastname}" был изменен`
+          text: `Пользователь "${id}" был изменен на фамилию:"${lastname}", имя не изменилось`
         }
         await this.loadPeople()
       } catch (e) {
